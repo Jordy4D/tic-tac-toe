@@ -11,8 +11,7 @@ const gameboard = (function() {
     }
 
     
-    const getBoard = () => board;
-
+    // const getBoard = () => board;
 
 
     const addMark = (row, col) => {
@@ -28,10 +27,6 @@ const gameboard = (function() {
 
     }
 
-    // const printBoard = () => {
-    //     const boardWithOpenCells = board.map((row) => row.map((cell) => cell.getValue()))
-    //     console.log(boardWithOpenCells);
-    // }
 
     return { board, addMark };
 
@@ -42,38 +37,38 @@ const gameboard = (function() {
 const Player = (function() {
     
     const allPlayers = []
-
-
     
-    // need to work out preventing more players in array
-    if (allPlayers.length >= 3) {
-        console.log('Two players already playing')
-    } 
+    const newPlayer = (name, mark) => {
+        if (allPlayers.length >= 2) {
+            console.log('Two players already playing')
+            return;
+        } 
+        
+        allPlayers.push({ name, mark })
     
-    const newPlayer = (name, mark) => allPlayers.push({ name, mark })
-    
-    
+    }
+     
     return { allPlayers, newPlayer }
 
 })(); 
 
 // function GameLogic (
-//     playerOneName = "Player One",
-//     playerTwoName = "Player Two"
-// ) {
-//     const board = Gameboard();
+//     playerOneName = Player.allPlayers[0].name,
+//     playerTwoName = Player.allPlayers[1].name
+//     ) {
+//     const board = gameboard();
 
 
-//     let activePlayer = players[0];
+//     let activePlayer = Player.allPlayers[0];
 
 //     const switchPlayerTurn = () => {
-//         activePlayer = activePlayer === players[0] ? players[1] : players[0];
+//         activePlayer = activePlayer === Player.allPlayers[0] ? Player.allPlayers[1] : Player.allPlayers[0];
 //     }
 
 //     const getActivePlayer = () => activePlayer;
 
 //     const printNewRound = () => {
-//         boardArr.printBoard();
+//         board.printBoard();
 //         console.log(`${getActivePlayer().name}'s turn.`)
 //     }
 
