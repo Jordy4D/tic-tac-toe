@@ -14,13 +14,13 @@ const gameboard = (function() {
     // const getBoard = () => board;
 
 
-    const addMark = (row, col) => {
+    const addMark = (row, col, mark) => {
         // board.filter((element) => element[row][col] = "X")
-        
+
         if (board[row][col] !== '') {
             console.log("choose another space")
         } else {
-            board[row][col] = "x"
+            board[row][col] = mark
             console.table(gameboard.board)
 
         }
@@ -52,48 +52,40 @@ const Player = (function() {
 
 })(); 
 
-// function GameLogic (
-//     playerOneName = Player.allPlayers[0].name,
-//     playerTwoName = Player.allPlayers[1].name
-//     ) {
-//     const board = gameboard();
+function GameLogic () {
+    const board = gameboard.board;
 
+    let players = Player.allPlayers
 
-//     let activePlayer = Player.allPlayers[0];
+    let activePlayer = players[0];
 
-//     const switchPlayerTurn = () => {
-//         activePlayer = activePlayer === Player.allPlayers[0] ? Player.allPlayers[1] : Player.allPlayers[0];
-//     }
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === Player.allPlayers[0] ? Player.allPlayers[1] : Player.allPlayers[0];
+    }
 
-//     const getActivePlayer = () => activePlayer;
+    const getActivePlayer = () => activePlayer;
 
-//     const printNewRound = () => {
-//         board.printBoard();
-//         console.log(`${getActivePlayer().name}'s turn.`)
-//     }
+    const printNewRound = () => {
+        board;
+        console.log(`${getActivePlayer().name}'s turn.`)
+    }
 
-//     const playRound = () => {
-//         console.log(
-//             `Adding ${getActivePlayer().name}'s value to the board.`
-//         )
-//         board.playerMark(row, col, getActivePlayer().value);
+    const playRound = () => {
+        console.log(
+            `Adding ${getActivePlayer().name}'s value to the board.`
+        )
+        board.addMark(row, col, getActivePlayer().mark);
     
-//         switchPlayerTurn();
-//         printNewRound();    
-// };
+        switchPlayerTurn();
+        printNewRound();    
+    };
 
-// printNewRound();
+    printNewRound();
     
-// return {
-//     playRound,
-//     getActivePlayer
-// };
+    return { playRound, getActivePlayer };
 
 
-// }
+}
 
-// Gameboard();
+gameboard
 
-// const game = GameLogic();
-
-// game();
