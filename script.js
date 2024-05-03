@@ -6,7 +6,7 @@ const gameboard = (function() {
     for (let i = 0 ; i < rows ; i++ ) {
         board[i] = [];
         for (let j = 0 ; j < cols ; j++) {
-            board[i].push('')
+            board[i].push('');
         }
     }
 
@@ -18,10 +18,10 @@ const gameboard = (function() {
         // board.filter((element) => element[row][col] = "X")
 
         if (board[row][col] !== '') {
-            console.log("choose another space")
+            console.log("choose another space");
         } else {
-            board[row][col] = mark
-            console.table(gameboard.board)
+            board[row][col] = mark;
+            console.table(gameboard.board);
 
         }
 
@@ -36,15 +36,15 @@ const gameboard = (function() {
 
 const Player = (function() {
     
-    const allPlayers = []
+    const allPlayers = [];
     
     const newPlayer = (name, mark) => {
         if (allPlayers.length >= 2) {
-            console.log('Two players already playing')
+            console.log('Two players already playing');
             return;
         } 
         
-        allPlayers.push({ name, mark })
+        allPlayers.push({ name, mark });
     
     }
      
@@ -52,25 +52,49 @@ const Player = (function() {
 
 })(); 
 
-function GameLogic () {
+function GameLogic (
+    playerOneName = "Player One",
+    playerTwoName = "Player Two"
+
+) {
     const board = gameboard.board;
 
-    let players = Player.allPlayers
+    // const players = Player.allPlayers;
+
+    const players = [
+        {
+        name: playerOneName,
+        mark: "X"
+        },
+        {
+        name: playerTwoName,
+        mark: "O"
+        }
+    ]
 
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === Player.allPlayers[0] ? Player.allPlayers[1] : Player.allPlayers[0];
-    }
+        // activePlayer = activePlayer == players[0] ? players[1] : players[0];
+        
+        
+         if (activePlayer === players[0]) {
+            activePlayer = players[1];
+        } else if (activePlayer === players[1]) {
+            activePlayer = players[0];
+        }
+        console.log(activePlayer);
+
+    };
 
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
         board;
-        console.log(`${getActivePlayer().name}'s turn.`)
+        console.log(`${getActivePlayer().name}'s turn.`);
     }
 
-    const playRound = () => {
+    const playRound = (row, col) => {
         console.log(
             `Adding ${getActivePlayer().name}'s value to the board.`
         )
@@ -82,7 +106,12 @@ function GameLogic () {
 
     printNewRound();
     
-    return { playRound, getActivePlayer };
+    return { players, 
+        activePlayer, 
+        playRound,
+        switchPlayerTurn, 
+        getActivePlayer 
+        };
 
 
 }
