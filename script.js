@@ -11,7 +11,7 @@ const gameboard = (function() {
     }
 
     
-    // const getBoard = () => board;
+    const getBoard = () => board;
 
 
     const addMark = (row, col, mark) => {
@@ -28,36 +28,33 @@ const gameboard = (function() {
     }
 
 
-    return { board, addMark };
+    return { board, getBoard, addMark };
 
 })();
 
-
-
-const Player = (function() {
+function createPlayer (name, mark) {
     
-    const allPlayers = [];
+    if (gameController.players.length >= 2) {
+        console.log('Two players already playing');
+        return;
+    } 
+    gameController.players.push({ name, mark });
     
-    const newPlayer = (name, mark) => {
-        if (allPlayers.length >= 2) {
-            console.log('Two players already playing');
-            return;
-        } 
-        
-        allPlayers.push({ name, mark });
     
-    }
+    // const allPlayers = [];
+    
      
     return { allPlayers, newPlayer }
 
-})(); 
+}; 
 
 const gameController = (function (
     playerOneName = "Player One",
     playerTwoName = "Player Two"
 
 ) {
-    const board = gameboard.board;
+    
+    const controllerBoard = gameboard.getBoard();
 
     // const players = Player.allPlayers;
 
@@ -76,7 +73,7 @@ const gameController = (function (
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board;
+        controllerBoard;
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
@@ -84,7 +81,7 @@ const gameController = (function (
         console.log(
             `Adding ${getActivePlayer().name}'s value to the board.`
         )
-        board.addMark(row, col, getActivePlayer().mark);
+        gameboard.addMark(row, col, getActivePlayer().mark);
     
         switchPlayerTurn();
         printNewRound();    
@@ -94,6 +91,7 @@ const gameController = (function (
     
     return { players, 
         activePlayer, 
+        controllerBoard,
         playRound,
         switchPlayerTurn, 
         getActivePlayer 
