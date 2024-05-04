@@ -52,7 +52,7 @@ const Player = (function() {
 
 })(); 
 
-function GameLogic (
+const gameController = (function (
     playerOneName = "Player One",
     playerTwoName = "Player Two"
 
@@ -62,28 +62,14 @@ function GameLogic (
     // const players = Player.allPlayers;
 
     const players = [
-        {
-        name: playerOneName,
-        mark: "X"
-        },
-        {
-        name: playerTwoName,
-        mark: "O"
-        }
+        { name: playerOneName, mark: "X" },
+        { name: playerTwoName, mark: "O" }
     ]
 
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
-        // activePlayer = activePlayer == players[0] ? players[1] : players[0];
-        
-        
-         if (activePlayer === players[0]) {
-            activePlayer = players[1];
-        } else if (activePlayer === players[1]) {
-            activePlayer = players[0];
-        }
-        console.log(activePlayer);
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
 
     };
 
@@ -114,7 +100,8 @@ function GameLogic (
         };
 
 
-}
+})();
 
 gameboard
+gameController
 
