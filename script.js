@@ -92,28 +92,23 @@ const gameController = (function (
     
     
     const getWinner = () => {
-        const topLeft = gameController.controllerBoard[0][0];
-        const topMid = gameController.controllerBoard[0][1];
-        const topRight = gameController.controllerBoard[0][2];
-        const midLeft = gameController.controllerBoard[1][0];
-        const midMid = gameController.controllerBoard[1][1];
-        const midRight = gameController.controllerBoard[1][2];
-        const botLeft = gameController.controllerBoard[2][0];
-        const botMid = gameController.controllerBoard[2][1];
-        const botRight = gameController.controllerBoard[2][2];
 
-        const horizontalWin = ( topLeft && topMid && topRight ||
-                                midLeft && midMid && midRight ||
-                                botLeft && botMid && botRight )
+        const horizontalWin = ( gameboard.getBoard()[0].join() ||
+                                gameboard.getBoard()[1].join() ||
+                                gameboard.getBoard()[2].join() )
 
-        const veritcalWin = (   topLeft && midLeft && botLeft ||
-                                topMid && midMid && botMid ||
-                                topRight && midRight && botRight )
+        const veritcalWin = (   gameboard.getBoard().map(x => x[0]).join() ||
+                                gameboard.getBoard().map(x => x[1]).join() ||
+                                gameboard.getBoard().map(x => x[2]).join() )
 
-        const diagonalWin = (   topLeft && midMid && botRight || 
-                                botLeft && midMid && topRight )
+        const diagonalWin = [];    
 
-        
+        const x = players[0].mark;
+        const o = players[1].mark;
+
+        // gameboard.getBoard().map(x => x[1]).join() === "O,X,O" // takes column 2 value, reduces to values, and compares to the string
+
+
         // for (let i = 0 ; i <= gameController.controllerBoard.length ; i++) {
         //     for (let j = 0 ; j <= gameController.controllerBoard.length ; j++) {
         //         if (gameController.controllerBoard[i][j] === '') {
@@ -124,19 +119,32 @@ const gameController = (function (
         //     }
         // }
 
-        if (horizontalWin === ( players[0].mark || players[1].mark ) ) {
+        // can't do this tie function
+        if ( (gameController.controllerBoard[0].includes('') ||
+            gameController.controllerBoard[1].includes('') ||
+            gameController.controllerBoard[2].includes('') ) === false ) {
+                console.log('tie!')
+        
+        } else if (horizontalWin === ( "X,X,X" || "O,O,O" ) ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
         
-        } else if ( veritcalWin === ( players[0].mark || players[1].mark )) {
+        } else if ( veritcalWin === ( "X,X,X" || "O,O,O" )) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
     
-        } else if ( diagonalWin === ( players[0].mark || players[1].mark ) ) {
+        } else if ( diagonalWin === ( "X,X,X" || "O,O,O" ) ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
-        } 
+        } else if (
+            (gameController.controllerBoard[0] && 
+            gameController.controllerBoard[1] &&
+            gameController.controllerBoard[2]) === false ) {
+                console.log(`Tie!`)
+
+            }
         
+        console.table(gameController.controllerBoard)
         
     }
 
