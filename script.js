@@ -92,57 +92,56 @@ const gameController = (function (
     
     
     const getWinner = () => {
+        const diagForwArr = [];
+        const diagRevArr = [];
 
-        const horizontalWin = ( gameboard.getBoard()[0].join() ||
-                                gameboard.getBoard()[1].join() ||
-                                gameboard.getBoard()[2].join() )
+        for (let i = 0, j = 2 ; i <= 2 ; i++, j--) {
+            diagForwArr.push(gameController.controllerBoard[i][i])
+            diagRevArr.push(gameController.controllerBoard[i][j])
+        }
 
-        const veritcalWin = (   gameboard.getBoard().map(x => x[0]).join() ||
-                                gameboard.getBoard().map(x => x[1]).join() ||
-                                gameboard.getBoard().map(x => x[2]).join() )
-
-        const diagonalWin = [];    
-
-        const x = players[0].mark;
-        const o = players[1].mark;
-
-        // gameboard.getBoard().map(x => x[1]).join() === "O,X,O" // takes column 2 value, reduces to values, and compares to the string
-
-
-        // for (let i = 0 ; i <= gameController.controllerBoard.length ; i++) {
-        //     for (let j = 0 ; j <= gameController.controllerBoard.length ; j++) {
-        //         if (gameController.controllerBoard[i][j] === '') {
-        //             continue;
-        //         } else {
-        //             console.log(`it's a tie!`)
-        //         }
-        //     }
-        // }
-
-        // can't do this tie function
-        if ( (gameController.controllerBoard[0].includes('') ||
-            gameController.controllerBoard[1].includes('') ||
-            gameController.controllerBoard[2].includes('') ) === false ) {
-                console.log('tie!')
         
-        } else if (horizontalWin === ( "X,X,X" || "O,O,O" ) ) {
+
+        const horizontalWin = [
+            gameboard.getBoard()[0].join(),
+            gameboard.getBoard()[1].join(),
+            gameboard.getBoard()[2].join() 
+        ]
+
+        const veritcalWin = [
+            gameboard.getBoard().map(x => x[0]).join(),
+            gameboard.getBoard().map(x => x[1]).join(),
+            gameboard.getBoard().map(x => x[2]).join()
+        ]
+
+        const diagonalWin = [
+            diagForwArr.join(),
+            diagRevArr.join()    
+        ] 
+        
+
+
+        // const x = players[0].mark;
+        // const o = players[1].mark;
+
+
+        
+        if ( horizontalWin.includes("X,X,X") || horizontalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
         
-        } else if ( veritcalWin === ( "X,X,X" || "O,O,O" )) {
+        } else if ( veritcalWin.includes("X,X,X") || veritcalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
     
-        } else if ( diagonalWin === ( "X,X,X" || "O,O,O" ) ) {
+        } else if ( diagonalWin.includes("X,X,X")  || diagonalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
-        } else if (
-            (gameController.controllerBoard[0] && 
-            gameController.controllerBoard[1] &&
-            gameController.controllerBoard[2]) === false ) {
-                console.log(`Tie!`)
-
-            }
+        } else if ( (gameboard.getBoard()[0].includes('') === false ) && 
+                    (gameboard.getBoard()[1].includes('') === false ) && 
+                    (gameboard.getBoard()[2].includes('')  === false) ) {
+                        console.log('tie!')
+        }
         
         console.table(gameController.controllerBoard)
         
@@ -156,12 +155,90 @@ const gameController = (function (
         playRound,
         switchPlayerTurn, 
         getActivePlayer,
-        getWinner
+        getWinner,
+        
         };
 
 
 })();
 
+const getDisplay = (function() {
+    // const rows = 3;
+    // const cols = 3;
+    // const board = [];
+
+    const container = document.createElement('div')
+    container.classList.add('container')
+    // const div = document.createElement('div')
+    
+    document.body.appendChild(container)
+    
+    for (i in gameboard.getBoard()) {
+        for (i in gameboard.getBoard()) {
+            const boardSquare = document.createElement('div')
+            boardSquare.classList.add('boardSquare')
+            container.appendChild(boardSquare)
+        }
+    }
+    // const setBoard = () => {
+
+    // }
+
+
+
+    // for (let i = 0 ; i < rows ; i++ ) {
+    //     board[i] = [];
+    //     for (let j = 0 ; j < cols ; j++) {
+    //         board[i].push('');
+    //     }
+    // }
+
+    
+    // const getBoard = () => board;
+
+
+    // const addMark = (row, col, mark) => {
+    //     // board.filter((element) => element[row][col] = "X")
+
+    //     if (board[row][col] !== '') {
+    //         console.log("choose another space");
+    //     } else {
+    //         board[row][col] = mark;
+    //         console.table(gameboard.board);
+
+    //     }
+
+    // }
+
+
+    return { setBoard };
+
+})();
+
+
 gameboard
 gameController
+getDisplay
 
+// horizontal win test
+// gameController.playRound(0,0)
+// gameController.playRound(1,0)
+// gameController.playRound(0,1)
+// gameController.playRound(2,2)
+// gameController.playRound(0,2)
+
+// vertical win test
+// gameController.playRound(0,0)
+// gameController.playRound(0,1)
+// gameController.playRound(1,0)
+// gameController.playRound(2,2)
+// gameController.playRound(2,0)
+
+// diagonal win test
+// gameController.playRound(0,0)
+// gameController.playRound(1,0)
+// gameController.playRound(2,0)
+// gameController.playRound(0,1)
+// gameController.playRound(1,1)
+// gameController.playRound(2,1)
+// gameController.playRound(0,2)
