@@ -129,14 +129,18 @@ const gameController = (function (
         if ( horizontalWin.includes("X,X,X") || horizontalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
+            return `${getActivePlayer().name} is the winner!`
         
         } else if ( veritcalWin.includes("X,X,X") || veritcalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
+            return `${getActivePlayer().name} is the winner!`
     
         } else if ( diagonalWin.includes("X,X,X")  || diagonalWin.includes("O,O,O") ) {
                         
             console.log(`${getActivePlayer().name} is the winner!`)
+            return `${getActivePlayer().name} is the winner!`
+            
         } else if ( (gameboard.getBoard()[0].includes('') === false ) && 
                     (gameboard.getBoard()[1].includes('') === false ) && 
                     (gameboard.getBoard()[2].includes('')  === false) ) {
@@ -171,11 +175,22 @@ const getDisplay = (function() {
 
     const board = document.createElement('div')
     board.classList.add('gameboard')
-    // const div = document.createElement('div')
+
+    const info = document.createElement('div')
+    info.classList.add('info')
+
+    const playerNames = document.createElement('div')
+    playerNames.classList.add('playerNames')
+    playerNames.textContent = `${gameController.players[0].name} ${gameController.players[1].name} -- ${gameController.getWinner()}`
+
     
+
     document.body.appendChild(container)
+    container.appendChild(info)
+    info.appendChild(playerNames)
     container.appendChild(board)
     
+
 
     for (i in displayBoard) {
         for (j in displayBoard) {
@@ -194,7 +209,7 @@ const getDisplay = (function() {
     }
     
     // const playerNames = () => {
-    //     const
+    //     const 
 
     // }
 
