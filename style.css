@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    height: 50vh;
     justify-self: center;
     align-self: center;
     gap: 5px;
@@ -19,6 +20,6 @@
 .boardSquare {
     display: grid;
     border: 2px solid black;
-    height: 5px;
-    width: 5px;
+    /* height: 5px; */
+    /* width: 5px; */
 }

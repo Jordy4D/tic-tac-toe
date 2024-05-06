@@ -22,7 +22,7 @@ const gameboard = (function() {
         } else {
             board[row][col] = mark;
             console.table(gameboard.board);
-
+            getDisplay.displayXO(row, col);
         }
 
     }
@@ -163,9 +163,8 @@ const gameController = (function (
 })();
 
 const getDisplay = (function() {
-    // const rows = 3;
-    // const cols = 3;
-    // const board = [];
+
+    const displayBoard = gameboard.getBoard();
 
     const container = document.createElement('div')
     container.classList.add('container')
@@ -173,23 +172,27 @@ const getDisplay = (function() {
     
     document.body.appendChild(container)
     
-    for (i in gameboard.getBoard()) {
-        for (i in gameboard.getBoard()) {
+    for (i in displayBoard) {
+        for (j in displayBoard) {
             const boardSquare = document.createElement('div')
-            boardSquare.classList.add('boardSquare')
+            boardSquare.classList.add(`boardSquare`)
+            boardSquare.setAttribute("id", `square${i+j}`)
             container.appendChild(boardSquare)
         }
     }
-    // const setBoard = () => {
+    
+    const displayXO = (row, col) => {
 
-    // }
+            const squareInsert = document.getElementById(`square${[row]+[col]}`)
+            squareInsert.textContent = `${gameController.getActivePlayer().mark}`
+                
+            
+        
+    }
+    
+    // for (let i = 0 ; i < 3 ; i++ ) {
+    //         for (let j = 0 ; j < 3 ; j++) {
 
-
-
-    // for (let i = 0 ; i < rows ; i++ ) {
-    //     board[i] = [];
-    //     for (let j = 0 ; j < cols ; j++) {
-    //         board[i].push('');
     //     }
     // }
 
@@ -211,7 +214,7 @@ const getDisplay = (function() {
     // }
 
 
-    return { setBoard };
+    return { displayXO };
 
 })();
 
