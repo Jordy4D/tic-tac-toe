@@ -4,17 +4,35 @@
     margin: 0;
 }
 
-.container {
+body {
+    display: grid;
+    justify-content: center;
+    align-self: center;
+    padding: 20px;
+
+}
+
+.gameboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 50vh;
+    width: 50vw;
+    gap: 5px;
+    border: 1px solid red;
+}
+
+.container {
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr); */
+    height: 50vh;
+    width: 50vw;
     justify-self: center;
     align-self: center;
     gap: 5px;
     border: 1px solid red;
     margin-top: 20px;
-    
 }
 
 .boardSquare {

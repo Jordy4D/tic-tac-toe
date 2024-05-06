@@ -168,51 +168,35 @@ const getDisplay = (function() {
 
     const container = document.createElement('div')
     container.classList.add('container')
+
+    const board = document.createElement('div')
+    board.classList.add('gameboard')
     // const div = document.createElement('div')
     
     document.body.appendChild(container)
+    container.appendChild(board)
     
+
     for (i in displayBoard) {
         for (j in displayBoard) {
             const boardSquare = document.createElement('div')
             boardSquare.classList.add(`boardSquare`)
             boardSquare.setAttribute("id", `square${i+j}`)
-            container.appendChild(boardSquare)
+            board.appendChild(boardSquare)
         }
     }
     
     const displayXO = (row, col) => {
 
-            const squareInsert = document.getElementById(`square${[row]+[col]}`)
-            squareInsert.textContent = `${gameController.getActivePlayer().mark}`
+        const squareInsert = document.getElementById(`square${[row]+[col]}`)
+        squareInsert.textContent = `${gameController.getActivePlayer().mark}`
                 
-            
-        
     }
     
-    // for (let i = 0 ; i < 3 ; i++ ) {
-    //         for (let j = 0 ; j < 3 ; j++) {
-
-    //     }
-    // }
-
-    
-    // const getBoard = () => board;
-
-
-    // const addMark = (row, col, mark) => {
-    //     // board.filter((element) => element[row][col] = "X")
-
-    //     if (board[row][col] !== '') {
-    //         console.log("choose another space");
-    //     } else {
-    //         board[row][col] = mark;
-    //         console.table(gameboard.board);
-
-    //     }
+    // const playerNames = () => {
+    //     const
 
     // }
-
 
     return { displayXO };
 
@@ -237,11 +221,10 @@ getDisplay
 // gameController.playRound(2,2)
 // gameController.playRound(2,0)
 
-// diagonal win test
-// gameController.playRound(0,0)
+// diagonal win test (second player)
 // gameController.playRound(1,0)
+// gameController.playRound(0,0)
 // gameController.playRound(2,0)
-// gameController.playRound(0,1)
 // gameController.playRound(1,1)
-// gameController.playRound(2,1)
-// gameController.playRound(0,2)
+// gameController.playRound(0,1)
+// gameController.playRound(2,2)
