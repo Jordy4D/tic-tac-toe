@@ -48,19 +48,15 @@ function createPlayer (name, mark) {
 
 }; 
 
-const gameController = (function (
-    playerOneName = "Player One",
-    playerTwoName = "Player Two"
-
-) {
+const gameController = (function () {
     
     const controllerBoard = gameboard.getBoard();
 
     // const players = Player.allPlayers;
 
     const players = [
-        { name: playerOneName, mark: "X" },
-        { name: playerTwoName, mark: "O" }
+        { name: "Player One", mark: "X" },
+        { name: "Player Two", mark: "O" }
     ]
 
     let activePlayer = players[0];
@@ -88,7 +84,8 @@ const gameController = (function (
         printNewRound();    
     };
 
-    
+
+
     
     
     const getWinner = () => {
@@ -183,8 +180,16 @@ const getDisplay = (function() {
     info.classList.add('info')
 
     const playerNames = document.createElement('div')
-    playerNames.classList.add('playerNames')
-    playerNames.textContent = `${gameController.players[0].name} ${gameController.players[1].name}`
+    const playerOneDisplay = document.createElement('div')
+    const playerTwoDisplay = document.createElement('div')
+
+    playerNames.classList.add('playersContainer')
+    playerOneDisplay.classList.add('playerNames')
+    playerTwoDisplay.classList.add('playerNames')
+
+    playerOneDisplay.textContent = `Player One: ${gameController.players[0].name}`
+    playerTwoDisplay.textContent = `Player Two: ${gameController.players[1].name}`
+
 
     const winner = document.createElement('div')
     winner.classList.add('winner')
@@ -194,11 +199,13 @@ const getDisplay = (function() {
     document.body.appendChild(container)
     container.appendChild(info)
     info.appendChild(playerNames)
+    playerNames.appendChild(playerOneDisplay)
+    playerNames.appendChild(playerTwoDisplay)
     info.appendChild(winner)
     container.appendChild(board)
     
-
-
+    
+    
     for (i in displayBoard) {
         for (j in displayBoard) {
             const boardSquare = document.createElement('div')
@@ -208,19 +215,36 @@ const getDisplay = (function() {
         }
     }
     
+
+
     const displayXO = (row, col) => {
 
         const squareInsert = document.getElementById(`square${[row]+[col]}`)
-        squareInsert.textContent = `${gameController.getActivePlayer().mark}`
+        squareInsert.innerHTML = `<span>${gameController.getActivePlayer().mark}</span>`
                 
     }
     
+    //need to finalize click to place XO function here
+    const xoSquare = document.querySelectorAll('.boardSquare');
+    xoSquare.forEach(function(div) {
+        div.addEventListener("click", () => {
+            const square = div.id
+            const coordinates =  square.slice(7).split()
+            const targetRow = coordinates[0]
+            const targetCol = coordinates[1]
+            gameController.playRound(targetRow, targetCol);
+        });
+
+    })
+
+
+
     // const playerNames = () => {
     //     const 
 
     // }
 
-    return { displayXO, winner };
+    return { displayXO, winner, xoSquare };
 
 })();
 
