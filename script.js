@@ -3,12 +3,15 @@ const gameboard = (function() {
     const cols = 3;
     const board = [];
 
-    for (let i = 0 ; i < rows ; i++ ) {
-        board[i] = [];
-        for (let j = 0 ; j < cols ; j++) {
-            board[i].push('');
+    const boardStart = () => {        
+        for (let i = 0 ; i < rows ; i++ ) {
+            board[i] = [];
+            for (let j = 0 ; j < cols ; j++) {
+                board[i].push('');
+
+            }
         }
-    }
+    }   
 
     
     const getBoard = () => board;
@@ -27,8 +30,9 @@ const gameboard = (function() {
 
     }
 
+    boardStart();
 
-    return { getBoard, addMark };
+    return { getBoard, addMark, boardStart };
 
 })();
 
@@ -151,6 +155,10 @@ const gameController = (function () {
         
     }
 
+    const boardReset = () => {
+        
+    }
+
     printNewRound();
     
     return { players, 
@@ -224,14 +232,13 @@ const getDisplay = (function() {
                 
     }
     
-    //need to finalize click to place XO function here
-    const xoSquare = document.querySelectorAll('.boardSquare');
-    xoSquare.forEach(function(div) {
+    const xoSquare = document.querySelectorAll('.boardSquare').forEach(function(div) {
         div.addEventListener("click", () => {
             const square = div.id
-            const coordinates =  square.slice(7).split()
+            const coordinates =  square.slice(6).split('')
             const targetRow = coordinates[0]
             const targetCol = coordinates[1]
+            
             gameController.playRound(targetRow, targetCol);
         });
 
