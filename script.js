@@ -128,24 +128,27 @@ const gameController = (function (
         
         if ( horizontalWin.includes("X,X,X") || horizontalWin.includes("O,O,O") ) {
                         
-            console.log(`${getActivePlayer().name} is the winner!`)
-            return `${getActivePlayer().name} is the winner!`
+            // console.log(`${getActivePlayer().name} is the winner!`)
+            // winner = getDisplay.winner
+            // const horWinner = document.getElementsByClassName('winner')
+            getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
+            // winner.appendChild(horWinner)
         
         } else if ( veritcalWin.includes("X,X,X") || veritcalWin.includes("O,O,O") ) {
                         
-            console.log(`${getActivePlayer().name} is the winner!`)
-            return `${getActivePlayer().name} is the winner!`
+            // console.log(`${getActivePlayer().name} is the winner!`)
+            getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
     
         } else if ( diagonalWin.includes("X,X,X")  || diagonalWin.includes("O,O,O") ) {
                         
-            console.log(`${getActivePlayer().name} is the winner!`)
-            return `${getActivePlayer().name} is the winner!`
-            
+            // console.log(`${getActivePlayer().name} is the winner!`)
+            getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
+
         } else if ( (gameboard.getBoard()[0].includes('') === false ) && 
                     (gameboard.getBoard()[1].includes('') === false ) && 
                     (gameboard.getBoard()[2].includes('')  === false) ) {
-                        console.log('tie!')
-        }
+                        getDisplay.winner.textContent = `Tie!`
+                    }
         
         console.table(gameController.controllerBoard)
         
@@ -181,13 +184,17 @@ const getDisplay = (function() {
 
     const playerNames = document.createElement('div')
     playerNames.classList.add('playerNames')
-    playerNames.textContent = `${gameController.players[0].name} ${gameController.players[1].name} -- ${gameController.getWinner()}`
+    playerNames.textContent = `${gameController.players[0].name} ${gameController.players[1].name}`
 
+    const winner = document.createElement('div')
+    winner.classList.add('winner')
+    winner.textContent = ``
     
 
     document.body.appendChild(container)
     container.appendChild(info)
     info.appendChild(playerNames)
+    info.appendChild(winner)
     container.appendChild(board)
     
 
@@ -213,7 +220,7 @@ const getDisplay = (function() {
 
     // }
 
-    return { displayXO };
+    return { displayXO, winner };
 
 })();
 
@@ -243,3 +250,15 @@ getDisplay
 // gameController.playRound(1,1)
 // gameController.playRound(0,1)
 // gameController.playRound(2,2)
+
+// tie
+// gameController.playRound(1,0)
+// gameController.playRound(0,0)
+// gameController.playRound(2,0)
+// gameController.playRound(1,1)
+// gameController.playRound(0,1)
+// gameController.playRound(2,1)
+// gameController.playRound(2,2)
+// gameController.playRound(0,2)
+// gameController.playRound(1,2)
+
