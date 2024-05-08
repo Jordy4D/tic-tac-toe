@@ -21,10 +21,9 @@ const gameboard = (function() {
         // board.filter((element) => element[row][col] = "X")
 
         if (board[row][col] !== '') {
-            console.log("choose another space");
+
         } else {
             board[row][col] = mark;
-            console.table(gameboard.board);
             getDisplay.displayXO(row, col);
         }
 
@@ -38,23 +37,31 @@ const gameboard = (function() {
 
 const playerController = (function () {
     
-    // if (gameController.players.length >= 2) {
-    //     console.log('Two players already playing');
-    //     return;
-    // } 
 
     const getPlayerOneName = () => {
-        return playerOneName = prompt(`What is Player One's name?`)
-        
-
+        let playerOneName = prompt(`What is Player One's name?`, 'Player One')
+        if (playerOneName === '' || playerOneName === null) {
+            return playerOneName = `Player One`
+        } 
+        gameController.players[0].name = playerOneName;
+        getDisplay.displayPlayerOneName();
     }
-    // gameController.players.push({ name, mark });
     
+    const getPlayerTwoName = () => {
+        let playerTwoName = prompt(`What is Player Two's name?`, 'Player Two')
+        if (playerTwoName === '' || playerTwoName === null) {
+            return playerTwoName = `Player One`
+        } 
+        gameController.players[1].name = playerTwoName;
+        getDisplay.displayPlayerTwoName();
+    }
     
     // const allPlayers = [];
-    
+
+
+
      
-    return { getPlayerOneName }
+    return { getPlayerOneName, getPlayerTwoName }
 
 })(); 
 
@@ -80,14 +87,22 @@ const gameController = (function () {
 
     const printNewRound = () => {
         controllerBoard;
-        console.log(`${getActivePlayer().name}'s turn.`);
     }
 
     const playRound = (row, col) => {
-        console.log(
-            `Adding ${getActivePlayer().name}'s value to the board.`
-        )
-        gameboard.addMark(row, col, getActivePlayer().mark);
+
+        if (getDisplay.winner.textContent !== '' ) {
+            alert(`We have a winner! Press Reset to Start a New Game.`)
+            return;
+        }
+
+        if (gameboard.getBoard()[row][col] !== "") {
+            return alert(`Choose an open square!`);
+
+        } else {
+            gameboard.addMark(row, col, getActivePlayer().mark);
+
+        }
     
         getWinner();
         switchPlayerTurn();
@@ -128,27 +143,17 @@ const gameController = (function () {
         
 
 
-        // const x = players[0].mark;
-        // const o = players[1].mark;
-
-
         
         if ( horizontalWin.includes("X,X,X") || horizontalWin.includes("O,O,O") ) {
                         
-            // console.log(`${getActivePlayer().name} is the winner!`)
-            // winner = getDisplay.winner
-            // const horWinner = document.getElementsByClassName('winner')
             getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
-            // winner.appendChild(horWinner)
         
         } else if ( veritcalWin.includes("X,X,X") || veritcalWin.includes("O,O,O") ) {
                         
-            // console.log(`${getActivePlayer().name} is the winner!`)
             getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
     
         } else if ( diagonalWin.includes("X,X,X")  || diagonalWin.includes("O,O,O") ) {
                         
-            // console.log(`${getActivePlayer().name} is the winner!`)
             getDisplay.winner.textContent = `${getActivePlayer().name} is the winner!`
 
         } else if ( (gameboard.getBoard()[0].includes('') === false ) && 
@@ -157,7 +162,6 @@ const gameController = (function () {
                         getDisplay.winner.textContent = `Tie!`
                     }
         
-        console.table(gameController.controllerBoard)
         
     }
 
@@ -167,6 +171,7 @@ const gameController = (function () {
         document.querySelectorAll('.boardSquare').forEach(function(div) {
             div.textContent = '';
         })
+        activePlayer = players[0];
     }
 
     printNewRound();
@@ -206,17 +211,23 @@ const getDisplay = (function() {
     playerOneDisplay.classList.add('playerNames')
     playerTwoDisplay.classList.add('playerNames')
 
-    playerOneDisplay.textContent = `Player One: ${gameController.players[0].name}`
-    playerTwoDisplay.textContent = `Player Two: ${gameController.players[1].name}`
-
-    
+    playerOneDisplay.textContent = `Player One (X): `
+    playerTwoDisplay.textContent = `Player Two (O): `
 
 
 
     const winner = document.createElement('div')
     winner.classList.add('winner')
     winner.textContent = ``
+
+    const getPlayerOneName = document.createElement('button')
+    getPlayerOneName.classList.add('nameBtn')
+    getPlayerOneName.textContent = `Add Player One`
     
+    const getPlayerTwoName = document.createElement('button')
+    getPlayerTwoName.classList.add('nameBtn')
+    getPlayerTwoName.textContent = `Add Player Two`
+
     const resetBtn = document.createElement('button')
     resetBtn.classList.add('resetBtn')
     resetBtn.textContent = 'RESET'
@@ -224,13 +235,26 @@ const getDisplay = (function() {
     document.body.appendChild(container)
     container.appendChild(info)
     info.appendChild(playerNames)
-    playerNames.appendChild(playerOneDisplay)
-    playerNames.appendChild(playerTwoDisplay)
     info.appendChild(winner)
+    info.appendChild(getPlayerOneName)
+    info.appendChild(getPlayerTwoName)
     info.appendChild(resetBtn)
     container.appendChild(board)
+    playerNames.appendChild(playerOneDisplay)
+    playerNames.appendChild(playerTwoDisplay)
     
     
+    const displayPlayerOneName = () => {
+        playerOneDisplay.textContent = `Player One (X): ${gameController.players[0].name}`
+
+    }
+
+    const displayPlayerTwoName = () => {
+        playerTwoDisplay.textContent = `Player Two (O): ${gameController.players[1].name}`
+
+    }
+
+
     
     for (i in displayBoard) {
         for (j in displayBoard) {
@@ -241,13 +265,19 @@ const getDisplay = (function() {
         }
     }
     
-
-
+    
     const displayXO = (row, col) => {
-
+        
         const squareInsert = document.getElementById(`square${[row]+[col]}`)
-        squareInsert.innerHTML = `<span>${gameController.getActivePlayer().mark}</span>`
-                
+        
+        if ( squareInsert.textContent !== "" ) {
+            alert("Choose an open space!")
+            return
+        } else {
+            squareInsert.innerHTML = `<span>${gameController.getActivePlayer().mark}</span>`
+
+        }
+        
     }
     
     const xoSquare = document.querySelectorAll('.boardSquare').forEach(function(div) {
@@ -259,6 +289,16 @@ const getDisplay = (function() {
             
             gameController.playRound(targetRow, targetCol);
         });
+        
+    })
+    
+    getPlayerOneName.addEventListener('click', () => {
+        playerController.getPlayerOneName();
+
+    })
+
+    getPlayerTwoName.addEventListener('click', () => {
+        playerController.getPlayerTwoName();
 
     })
 
@@ -266,12 +306,9 @@ const getDisplay = (function() {
         gameController.boardReset();
     })
 
-    // const playerNames = () => {
-    //     const 
 
-    // }
 
-    return { displayXO, winner, xoSquare };
+    return { displayXO, winner, xoSquare, displayPlayerOneName, displayPlayerTwoName };
 
 })();
 
