@@ -69,3 +69,7 @@ body {
     margin: 0;
     padding: 2px;
 }
+
+.resetBtn {
+    background-color: red;
+}

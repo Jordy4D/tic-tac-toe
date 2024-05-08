@@ -36,21 +36,27 @@ const gameboard = (function() {
 
 })();
 
-function createPlayer (name, mark) {
+const playerController = (function () {
     
-    if (gameController.players.length >= 2) {
-        console.log('Two players already playing');
-        return;
-    } 
-    gameController.players.push({ name, mark });
+    // if (gameController.players.length >= 2) {
+    //     console.log('Two players already playing');
+    //     return;
+    // } 
+
+    const getPlayerOneName = () => {
+        return playerOneName = prompt(`What is Player One's name?`)
+        
+
+    }
+    // gameController.players.push({ name, mark });
     
     
     // const allPlayers = [];
     
      
-    return { allPlayers, newPlayer }
+    return { getPlayerOneName }
 
-}; 
+})(); 
 
 const gameController = (function () {
     
@@ -156,7 +162,11 @@ const gameController = (function () {
     }
 
     const boardReset = () => {
-        
+        gameboard.boardStart();
+        getDisplay.winner.textContent = '';
+        document.querySelectorAll('.boardSquare').forEach(function(div) {
+            div.textContent = '';
+        })
     }
 
     printNewRound();
@@ -168,6 +178,7 @@ const gameController = (function () {
         switchPlayerTurn, 
         getActivePlayer,
         getWinner,
+        boardReset
         
         };
 
@@ -198,11 +209,17 @@ const getDisplay = (function() {
     playerOneDisplay.textContent = `Player One: ${gameController.players[0].name}`
     playerTwoDisplay.textContent = `Player Two: ${gameController.players[1].name}`
 
+    
+
+
 
     const winner = document.createElement('div')
     winner.classList.add('winner')
     winner.textContent = ``
     
+    const resetBtn = document.createElement('button')
+    resetBtn.classList.add('resetBtn')
+    resetBtn.textContent = 'RESET'
 
     document.body.appendChild(container)
     container.appendChild(info)
@@ -210,6 +227,7 @@ const getDisplay = (function() {
     playerNames.appendChild(playerOneDisplay)
     playerNames.appendChild(playerTwoDisplay)
     info.appendChild(winner)
+    info.appendChild(resetBtn)
     container.appendChild(board)
     
     
@@ -244,7 +262,9 @@ const getDisplay = (function() {
 
     })
 
-
+    resetBtn.addEventListener('click', () => {
+        gameController.boardReset();
+    })
 
     // const playerNames = () => {
     //     const 
