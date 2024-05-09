@@ -226,7 +226,10 @@ const getDisplay = (function() {
     
     const getPlayerTwoName = document.createElement('button')
     getPlayerTwoName.classList.add('nameBtn')
-    getPlayerTwoName.textContent = `Add Player Two`
+    getPlayerTwoName.innerText = 'Add Player Two';
+
+    const btnNameGroup = document.createElement('div')
+    btnNameGroup.classList.add('btnNameGroup')
 
     const resetBtn = document.createElement('button')
     resetBtn.classList.add('resetBtn')
@@ -236,8 +239,9 @@ const getDisplay = (function() {
     container.appendChild(info)
     info.appendChild(playerNames)
     info.appendChild(winner)
-    info.appendChild(getPlayerOneName)
-    info.appendChild(getPlayerTwoName)
+    info.appendChild(btnNameGroup)
+    btnNameGroup.appendChild(getPlayerOneName)
+    btnNameGroup.appendChild(getPlayerTwoName)
     info.appendChild(resetBtn)
     container.appendChild(board)
     playerNames.appendChild(playerOneDisplay)
