@@ -18,7 +18,6 @@ const gameboard = (function() {
 
 
     const addMark = (row, col, mark) => {
-        // board.filter((element) => element[row][col] = "X")
 
         if (board[row][col] !== '') {
 
@@ -56,7 +55,6 @@ const playerController = (function () {
         getDisplay.displayPlayerTwoName();
     }
     
-    // const allPlayers = [];
 
 
 
@@ -69,7 +67,6 @@ const gameController = (function () {
     
     const controllerBoard = gameboard.getBoard();
 
-    // const players = Player.allPlayers;
 
     const players = [
         { name: "Player One", mark: "X" },
@@ -160,10 +157,9 @@ const gameController = (function () {
                     (gameboard.getBoard()[1].includes('') === false ) && 
                     (gameboard.getBoard()[2].includes('')  === false) ) {
                         getDisplay.winner.textContent = `Tie!`
-                    }
-        
-        
+        } 
     }
+    
 
     const boardReset = () => {
         gameboard.boardStart();
@@ -215,10 +211,12 @@ const getDisplay = (function() {
     playerTwoDisplay.textContent = `Player Two (O): `
 
 
-
     const winner = document.createElement('div')
     winner.classList.add('winner')
     winner.textContent = ``
+
+    const btnGroup = document.createElement('div')
+    btnGroup.classList.add('btnGroup')
 
     const getPlayerOneName = document.createElement('button')
     getPlayerOneName.classList.add('nameBtn')
@@ -239,10 +237,11 @@ const getDisplay = (function() {
     container.appendChild(info)
     info.appendChild(playerNames)
     info.appendChild(winner)
-    info.appendChild(btnNameGroup)
+    info.appendChild(btnGroup)
     btnNameGroup.appendChild(getPlayerOneName)
     btnNameGroup.appendChild(getPlayerTwoName)
-    info.appendChild(resetBtn)
+    btnGroup.appendChild(btnNameGroup)
+    btnGroup.appendChild(resetBtn)
     container.appendChild(board)
     playerNames.appendChild(playerOneDisplay)
     playerNames.appendChild(playerTwoDisplay)
@@ -321,36 +320,5 @@ gameboard
 gameController
 getDisplay
 
-// horizontal win test
-// gameController.playRound(0,0)
-// gameController.playRound(1,0)
-// gameController.playRound(0,1)
-// gameController.playRound(2,2)
-// gameController.playRound(0,2)
 
-// vertical win test
-// gameController.playRound(0,0)
-// gameController.playRound(0,1)
-// gameController.playRound(1,0)
-// gameController.playRound(2,2)
-// gameController.playRound(2,0)
-
-// diagonal win test (second player)
-// gameController.playRound(1,0)
-// gameController.playRound(0,0)
-// gameController.playRound(2,0)
-// gameController.playRound(1,1)
-// gameController.playRound(0,1)
-// gameController.playRound(2,2)
-
-// tie
-// gameController.playRound(1,0)
-// gameController.playRound(0,0)
-// gameController.playRound(2,0)
-// gameController.playRound(1,1)
-// gameController.playRound(0,1)
-// gameController.playRound(2,1)
-// gameController.playRound(2,2)
-// gameController.playRound(0,2)
-// gameController.playRound(1,2)
 
